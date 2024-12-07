@@ -39,6 +39,30 @@ testClusters {
     testDistribution = 'archive'
     if (numZones > 1) numberOfZones = numZones
     if (numNodes > 1) numberOfNodes = numNodes
+
+    // Remote Store Settings
+    setting 'cluster.remote_store.state.enabled', 'true'
+    setting 'cluster.remote_store.state.path.prefix', 'blp'
+    setting 'cluster.indices.replication.strategy', 'SEGMENT'
+
+    // Node attributes for segment repository
+    setting 'node.attr.remote_store.segment.repository', 'seg'
+    setting 'node.attr.remote_store.repository.seg.type', 'fs'
+    setting 'node.attr.remote_store.repository.seg.settings.location', '/Volumes/workplace/opensearch-project3/OpenSearch/build/testclusters/runTask-0/repo/seg'
+
+    // Node attributes for translog repository
+    setting 'node.attr.remote_store.translog.repository', 'rem'
+    setting 'node.attr.remote_store.repository.rem.type', 'fs'
+    setting 'node.attr.remote_store.repository.rem.settings.location', '/Volumes/workplace/opensearch-project3/OpenSearch/build/testclusters/runTask-0/repo/rem'
+
+    // Node attributes for state repository
+    setting 'node.attr.remote_store.state.repository', 'state'
+    setting 'node.attr.remote_store.repository.state.type', 'fs'
+    setting 'node.attr.remote_store.repository.state.settings.location', '/Volumes/workplace/opensearch-project3/OpenSearch/build/testclusters/runTask-0/repo/state'
+
+    // Additional settings from your docker configuration
+    setting 'path.repo', '/Volumes/workplace/opensearch-project3/OpenSearch/build/testclusters/runTask-0/repo'
+
     if (findProperty("installedPlugins")) {
       installedPlugins = Eval.me(installedPlugins)
       for (String p : installedPlugins) {
